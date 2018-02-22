@@ -1,0 +1,1 @@
+Simple NodeJS + ExpressJs project to monitor indian stocks
