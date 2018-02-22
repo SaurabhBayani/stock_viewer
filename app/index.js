@@ -3,17 +3,22 @@ const listRouter = require('./routers/list_router');
 
 const app = express();
 
-/* Routers */
-app.get('/list', listRouter);
-app.get('/', function (req, res) {
-  // Default route
-  res.redirect('/list');
-});
-app.get('*', function (req, res) {
-  // 404
-  res.status('404');
-  res.send('404 - OOPS you landed on wrong page. :(');
-});
+app
+  /* Statics */
+  .use('/static/vendor/bootstrap/', express.static('../node_modules/bootstrap/dist/css/'))
+
+  /* Routers */
+  .use('/list', listRouter)
+
+  /* Default Paths */
+  .get('/', function (req, res) {
+    res.redirect('/list');
+  })
+
+  .use('*', function (req, res) {
+    res.status('404');
+    res.send('404 - OOPS you landed on wrong page. :(');
+  });
 
 // Start this amazing app
 const listener = app.listen('8080', function () {
